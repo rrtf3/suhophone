@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>수호의 폰 · 팬메이드</title>
+<style>
+:root{--bg:#101114;--panel:#191a1f;--muted:#9a9ba4;--line:#2b2c32;--white:#f5f5f7;--accent:#d7f36a;--chat:#d7f36a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 10%,#292b31 0,#101114 55%);color:var(--white);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;min-height:100vh;display:grid;place-items:center;padding:18px}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.wrap{width:min(100%,390px)}.caption{text-align:center;color:#b8b9c0;font-size:12px;letter-spacing:.12em;margin-bottom:14px}
+.phone{position:relative;width:100%;height:min(820px,calc(100dvh - 65px));min-height:620px;background:#050506;border:1px solid #55565c;border-radius:42px;padding:9px;box-shadow:0 35px 100px #000b, inset 0 0 0 2px #1b1c20;overflow:hidden}
+.screen{height:100%;border-radius:33px;overflow:hidden;position:relative;background:#0e0f12}
+.status{height:35px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:700;position:relative;z-index:4}
+.dynamic{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:94px;height:25px;border-radius:20px;background:#000;z-index:5}
+.status .right{display:flex;gap:6px;align-items:center}
+.view{position:absolute;inset:35px 0 0;display:none;overflow:auto;padding:18px 17px 26px;scrollbar-width:none}.view::-webkit-scrollbar{display:none}.view.active{display:block}
+.home-wall{background:linear-gradient(160deg,#252932 0%,#111318 48%,#171a20 100%);overflow:hidden}
+.home-wall:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,#6a707b35,transparent 48%),linear-gradient(140deg,transparent 30%,#ffffff08 31%,transparent 55%);pointer-events:none}
+.lock-top{position:relative;text-align:center;padding-top:38px}.date{font-size:13px;color:#d5d6db}.bigtime{font-size:68px;line-height:1.08;letter-spacing:-.07em;font-weight:250;margin-top:7px}.quote{font-size:12px;color:#c1c3ca;margin-top:12px;letter-spacing:.02em}
+.widget{position:relative;background:#ffffff12;border:1px solid #ffffff14;border-radius:19px;padding:13px;margin-top:26px;backdrop-filter:blur(14px)}.widget-top{display:flex;justify-content:space-between;font-size:11px;color:#c7c9cf}.widget strong{display:block;font-size:15px;margin-top:8px}.widget small{color:#b6b8c0}
+.app-grid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 8px;margin-top:33px}.app{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;min-width:0}.appicon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:25px;box-shadow:0 5px 15px #0004;transition:transform .15s}.app:active .appicon{transform:scale(.92)}.kakao{background:#fee500;color:#241f00}.gallery{background:linear-gradient(145deg,#ffce9c,#d987b6 55%,#817ce0)}.notes{background:#f5d86b;color:#38301a}.music{background:linear-gradient(140deg,#f5a0b9,#a15dbe 55%,#5d68c7)}.phoneapp{background:linear-gradient(145deg,#a6f0aa,#32a65f)}.settings{background:linear-gradient(145deg,#b7becb,#626978)}.camera{background:linear-gradient(145deg,#e2e4e8,#858a95);color:#272a30}.messages{background:linear-gradient(145deg,#a4d4ff,#4484d7)}
+.dock{position:absolute;bottom:15px;left:15px;right:15px;display:flex;justify-content:space-around;align-items:center;border:1px solid #ffffff1b;background:#ffffff12;border-radius:24px;padding:11px 5px;backdrop-filter:blur(20px)}
+.dock .appicon{width:48px;height:48px}.home-indicator{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:105px;height:4px;border-radius:9px;background:#fff9;z-index:10}
+.apphead{display:flex;align-items:center;gap:10px;margin:0 0 19px}.back{border:0;background:#ffffff12;color:white;border-radius:12px;width:35px;height:35px;font-size:19px}.apphead h2{font-size:20px;margin:0;font-weight:700}.sub{font-size:11px;color:var(--muted);margin-top:4px}.search{width:100%;background:#23242a;border:1px solid #33343a;color:white;border-radius:12px;padding:11px 13px;margin-bottom:14px;outline:none}
+.chat-list{display:flex;flex-direction:column;gap:2px}.chat-row{display:flex;gap:11px;align-items:center;text-align:left;border:0;background:transparent;color:white;padding:13px 2px;border-bottom:1px solid #ffffff0b;width:100%}.avatar{width:44px;height:44px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#454852,#25272d);font-size:18px}.chat-info{min-width:0;flex:1}.chat-name{font-size:14px;font-weight:650}.preview{font-size:11px;color:#a4a5ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px}.time{font-size:10px;color:#8e9098;align-self:flex-start}.badge{display:inline-grid;place-items:center;background:var(--accent);color:#1b1d12;border-radius:10px;min-width:17px;height:17px;padding:0 4px;font-size:10px;margin-left:5px}
+.thread{position:absolute;inset:0;background:#b9c5bd;color:#171a18;display:none;flex-direction:column;z-index:8}.thread.show{display:flex}.thread-head{display:flex;align-items:center;gap:10px;padding:10px 15px;background:#e9eee9;border-bottom:1px solid #d3dad3}.thread-head button{border:0;background:transparent;font-size:20px}.thread-head strong{font-size:14px}.thread-head small{display:block;color:#68726b;font-size:10px;margin-top:2px}.bubbles{flex:1;overflow:auto;padding:18px 13px;display:flex;flex-direction:column;gap:10px}.daylabel{text-align:center;font-size:10px;color:#536158;margin:0 0 8px}.bubble{max-width:79%;padding:10px 11px;border-radius:4px 14px 14px 14px;background:#fff;font-size:13px;line-height:1.5;align-self:flex-start;box-shadow:0 1px 1px #0001;white-space:pre-wrap}.bubble.me{align-self:flex-end;background:#d8f6a4;border-radius:14px 4px 14px 14px}.bubble time{font-size:9px;color:#69736a;margin-left:8px;white-space:nowrap}.composer{display:flex;gap:8px;padding:10px;background:#edf1ec}.composer input{flex:1;min-width:0;border:0;border-radius:18px;padding:11px;background:white;color:#222;outline:none}.composer button{border:0;background:#344a39;color:white;border-radius:50%;width:40px;height:40px}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.photo{aspect-ratio:1/1.12;border-radius:15px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:11px;background:linear-gradient(135deg,#353b45,#17191e)}.photo:nth-child(2){background:linear-gradient(145deg,#c4c8b8,#5f6d62)}.photo:nth-child(3){background:linear-gradient(145deg,#3e485b,#b3a18c)}.photo:nth-child(4){background:linear-gradient(145deg,#b2b6bd,#545966)}.photo:nth-child(5){background:linear-gradient(145deg,#b6a0a3,#4c4652)}.photo:nth-child(6){background:linear-gradient(145deg,#6f847d,#283b3b)}.photo:before{content:"";position:absolute;width:130%;height:80%;top:-20%;left:-15%;background:linear-gradient(130deg,#ffffff30,transparent 40%,#0003);transform:rotate(-18deg)}.photo span{position:relative;font-size:11px;text-shadow:0 1px 4px #000}.photo em{position:absolute;right:9px;top:8px;font-style:normal;font-size:18px}
+.note{background:#1e2025;border:1px solid #303239;border-radius:15px;padding:14px;margin-bottom:10px}.note h3{font-size:14px;margin:0 0 8px}.note p{font-size:12px;color:#c3c4cb;line-height:1.65;margin:0;white-space:pre-wrap}.note textarea{width:100%;min-height:110px;background:#25272d;border:1px solid #393b43;border-radius:12px;padding:12px;color:white;resize:vertical;outline:none}.primary{border:0;background:var(--accent);color:#1b1d12;font-weight:700;padding:11px 15px;border-radius:12px;margin-top:9px}.track{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #292a30}.album{width:49px;height:49px;border-radius:12px;background:linear-gradient(135deg,#d9b0a4,#575d70);display:grid;place-items:center;font-size:20px}.track-info{flex:1}.track-info strong{display:block;font-size:13px}.track-info small{display:block;color:#a2a4ad;font-size:11px;margin-top:4px}.playbtn{border:0;background:#2b2d34;color:white;border-radius:50%;width:36px;height:36px}.player{background:#202127;border-radius:18px;padding:16px;margin-top:20px}.progress{height:4px;background:#41434a;border-radius:5px;margin:14px 0 7px;overflow:hidden}.progress span{display:block;height:100%;width:35%;background:var(--accent)}.player-controls{display:flex;justify-content:center;align-items:center;gap:25px}.player-controls button{border:0;background:transparent;color:white;font-size:21px}.player-controls .bigplay{background:var(--accent);color:#1a1b12;border-radius:50%;width:48px;height:48px}.callrow{display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #292a30}.callmark{font-size:19px;color:#a5e2a8}.callinfo{flex:1}.callinfo strong{font-size:13px;display:block}.callinfo small{font-size:11px;color:#9c9ea6;display:block;margin-top:5px}.calltype{font-size:11px;color:#a3a5ad}
+.notice{color:#777b85;font-size:10px;text-align:center;margin-top:18px;line-height:1.5}.toast{position:absolute;bottom:74px;left:50%;transform:translateX(-50%);background:#f2f2f2;color:#222;padding:9px 14px;border-radius:20px;font-size:11px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:15;white-space:nowrap}.toast.show{opacity:1}
+@media(max-height:690px){.phone{min-height:0;height:calc(100dvh - 35px)}.app-grid{gap:14px 8px;margin-top:20px}.lock-top{padding-top:20px}.bigtime{font-size:58px}.widget{margin-top:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="caption">FANMADE PROJECT · SUHO'S PHONE</div>
+ <div class="phone"><div class="screen">
+  <div class="dynamic"></div>
+  <div class="status"><span id="statusTime">9:41</span><span class="right"><span>▮▮▮</span><span>⌁</span><span>▰</span></span></div>
+  <section class="view home-wall active" id="home">
+   <div class="lock-top"><div class="date" id="dateLine">10월 18일 일요일</div><div class="bigtime" id="clock">9:41</div><div class="quote">별일 없는 하루. 그게 제일 낫지.</div></div>
+   <div class="widget"><div class="widget-top"><span>오늘의 기록</span><span>☁︎ 18°</span></div><strong>학교 끝나고 집 가는 길</strong><small>할 일은 내일 생각하자.</small></div>
+   <div class="app-grid">
+    <button class="app" data-open="chat"><span class="appicon kakao">●</span><span>카카오톡</span></button>
+    <button class="app" data-open="gallery"><span class="appicon gallery">▧</span><span>갤러리</span></button>
+    <button class="app" data-open="notes"><span class="appicon notes">▤</span><span>메모</span></button>
+    <button class="app" data-open="music"><span class="appicon music">♫</span><span>음악</span></button>
+    <button class="app" data-open="calls"><span class="appicon phoneapp">⌕</span><span>전화</span></button>
+    <button class="app" data-open="messages"><span class="appicon messages">▰</span><span>메시지</span></button>
+    <button class="app" data-open="camera"><span class="appicon camera">◎</span><span>카메라</span></button>
+    <button class="app" data-open="settings"><span class="appicon settings">⚙</span><span>설정</span></button>
+   </div>
+   <div class="dock">
+    <button class="app" data-open="calls"><span class="appicon phoneapp">⌕</span></button>
+    <button class="app" data-open="chat"><span class="appicon kakao">●</span></button>
+    <button class="app" data-open="music"><span class="appicon music">♫</span></button>
+    <button class="app" data-open="camera"><span class="appicon camera">◎</span></button>
+   </div>
+  </section>
+  <section class="view" id="chat">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>카카오톡</h2><div class="sub">친구 4 · 최근 대화</div></div></div>
+   <input class="search" placeholder="친구 이름 검색" id="chatSearch">
+   <div class="chat-list" id="chatList"></div><p class="notice">가상 대화 · 원작의 분위기를 참고한 팬메이드 설정</p>
+  </section>
+  <section class="view" id="gallery">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>갤러리</h2><div class="sub">최근 항목 · 6개</div></div></div>
+   <div class="gallery-grid">
+    <div class="photo" data-photo="하굣길 하늘"><em>⋯</em><span>하굣길 하늘 · 오늘</span></div>
+    <div class="photo" data-photo="학교 운동장"><em>⋯</em><span>학교 운동장 · 어제</span></div>
+    <div class="photo" data-photo="버스 창문"><em>⋯</em><span>버스 창문 · 월요일</span></div>
+    <div class="photo" data-photo="책상 위"><em>⋯</em><span>책상 위 · 월요일</span></div>
+    <div class="photo" data-photo="저녁 노을"><em>⋯</em><span>저녁 노을 · 일요일</span></div>
+    <div class="photo" data-photo="이어폰"><em>⋯</em><span>이어폰 · 일요일</span></div>
+   </div><p class="notice">사진은 실제 인물 사진이 아닌 추상적인 플레이스홀더예요.</p>
+  </section>
+  <section class="view" id="notes">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>메모</h2><div class="sub">이 기기에 저장되는 가상 메모</div></div></div>
+   <div class="note"><h3>오늘 할 일</h3><p>□ 체육복 챙기기\n□ 이어폰 충전\n□ 집 가서 낮잠</p></div>
+   <div class="note"><h3>메모 제목: 딱히 없음</h3><p id="savedNote">내일 준비물. 그리고 우유 사기.</p></div>
+   <textarea id="noteInput" placeholder="수호의 메모에 내용을 적어봐..."></textarea><button class="primary" id="saveNote">메모 저장</button>
+  </section>
+  <section class="view" id="music">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>음악</h2><div class="sub">최근 재생</div></div></div>
+   <div class="track"><div class="album">♫</div><div class="track-info"><strong>밤공기</strong><small>가상 플레이리스트 · 03:24</small></div><button class="playbtn" data-track="밤공기">▶</button></div>
+   <div class="track"><div class="album" style="background:linear-gradient(135deg,#7f8fa6,#29303b)">♪</div><div class="track-info"><strong>집에 가는 길</strong><small>가상 플레이리스트 · 02:58</small></div><button class="playbtn" data-track="집에 가는 길">▶</button></div>
+   <div class="track"><div class="album" style="background:linear-gradient(135deg,#d4c1a0,#72695b)">☾</div><div class="track-info"><strong>아무 생각 없이</strong><small>가상 플레이리스트 · 04:01</small></div><button class="playbtn" data-track="아무 생각 없이">▶</button></div>
+   <div class="player"><div class="sub">지금 재생 중</div><strong id="trackName">밤공기</strong><div class="progress"><span id="progress"></span></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#999ba3"><span id="elapsed">1:04</span><span>3:24</span></div><div class="player-controls"><button id="prevTrack">↶</button><button class="bigplay" id="togglePlay">▶</button><button id="nextTrack">↷</button></div></div><p class="notice">음악은 화면 내에서만 재생 상태를 표현합니다.</p>
+  </section>
+  <section class="view" id="calls">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>전화</h2><div class="sub">최근 통화</div></div></div>
+   <div class="callrow"><span class="callmark">↙</span><div class="callinfo"><strong>영이</strong><small>오늘 · 오후 4:12</small></div><span class="calltype">부재중</span></div>
+   <div class="callrow"><span class="callmark">↗</span><div class="callinfo"><strong>범석</strong><small>어제 · 오후 8:36</small></div><span class="calltype">2분 14초</span></div>
+   <div class="callrow"><span class="callmark">↗</span><div class="callinfo"><strong>모르는 번호</strong><small>어제 · 오후 6:02</small></div><span class="calltype">취소됨</span></div>
+   <div class="callrow"><span class="callmark">↙</span><div class="callinfo"><strong>엄마</strong><small>금요일 · 오후 7:21</small></div><span class="calltype">부재중</span></div>
+   <p class="notice">통화 기록은 모두 창작된 예시입니다.</p>
+  </section>
+  <section class="view" id="messages">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>메시지</h2><div class="sub">문자 메시지</div></div></div>
+   <div class="note"><h3>엄마 <span class="sub">오늘 17:10</span></h3><p>저녁 먹고 들어와. 늦으면 연락하고.</p></div><div class="note"><h3>택배 안내 <span class="sub">오늘 14:02</span></h3><p>고객님의 배송이 완료되었습니다.</p></div>
+  </section>
+  <section class="view" id="camera">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>카메라</h2><div class="sub">카메라 미리보기</div></div></div>
+   <div style="aspect-ratio:3/4;border-radius:24px;background:linear-gradient(145deg,#303640,#13151a 60%,#4a5059);display:grid;place-items:center;color:#aaa;font-size:12px;text-align:center;padding:20px">카메라 미리보기<br><small>실제 카메라에 연결되어 있지 않아요.</small></div><button class="primary" id="shutter" style="display:block;margin:20px auto;border-radius:50%;width:58px;height:58px;border:4px solid #888;background:#eee">●</button>
+  </section>
+  <section class="view" id="settings">
+   <div class="apphead"><button class="back" data-home>‹</button><div><h2>설정</h2><div class="sub">기기 정보</div></div></div>
+   <div class="note"><h3>기기 이름</h3><p>SUHO'S PHONE</p></div><div class="note"><h3>배경화면</h3><p>다크 그레이 · 미니멀</p></div><div class="note"><h3>정보</h3><p>《약한영웅》 안수호에서 영감을 받은 비공식 팬메이드 프로젝트입니다.</p></div>
+  </section>
+  <div class="thread" id="thread"><div class="thread-head"><button id="closeThread">‹</button><div class="avatar" id="threadAvatar">S</div><div><strong id="threadName">수호</strong><small>가상 대화 · 팬메이드</small></div></div><div class="bubbles" id="bubbles"></div><form class="composer" id="composer"><input id="messageInput" placeholder="메시지 보내기..." autocomplete="off"><button aria-label="보내기">➤</button></form></div>
+  <div class="toast" id="toast"></div>
+  <div class="home-indicator" id="homeIndicator"></div>
+ </div></div>
+</div>
+<script>
+const chats=[
+ {name:"영이",avatar:"🧢",preview:"내일 체육복 가져와라",time:"오후 4:12",unread:1,messages:[["them","야"],["them","내일 체육복 가져와라"],["me","ㅇㅋ"],["them","늦지나 마"],["me","너나 잘해"]]},
+ {name:"범석",avatar:"📚",preview:"숙제 했냐",time:"어제",unread:0,messages:[["them","숙제 했냐"],["me","아직"],["them","그럴 줄 알았다"],["me","ㅋㅋ 너는"],["them","했지."]]},
+ {name:"수호",avatar:"🥊",preview:"집 도착하면 연락",time:"어제",unread:0,messages:[["them","집 도착하면 연락"],["me","왜"],["them","그냥. 확인하려고"],["me","도착함"],["them","ㅇㅋ 잘 자"]]},
+ {name:"엄마",avatar:"🏠",preview:"저녁 먹고 들어와",time:"금요일",unread:0,messages:[["them","저녁 먹고 들어와. 늦으면 연락하고."],["me","알겠어"],["them","밥은 꼭 먹고"]]}
+];
+let activeChat=null,playing=false,trackIndex=0;
+const tracks=["밤공기","집에 가는 길","아무 생각 없이"];
+const $=s=>document.querySelector(s);
+function renderChats(filter=""){const list=$("#chatList");list.innerHTML="";chats.filter(c=>c.name.includes(filter)).forEach(c=>{const b=document.createElement("button");b.className="chat-row";b.innerHTML=`<span class="avatar">${c.avatar}</span><span class="chat-info"><span class="chat-name">${c.name}${c.unread?'<span class="badge">'+c.unread+'</span>':''}</span><span class="preview">${c.preview}</span></span><span class="time">${c.time}</span>`;b.onclick=()=>openChat(c);list.appendChild(b)})}
+function openChat(c){activeChat=c;$("#threadName").textContent=c.name;$("#threadAvatar").textContent=c.avatar;$("#bubbles").innerHTML='<div class="daylabel">오늘</div>';c.messages.forEach(m=>addBubble(m[0],m[1],false));$("#thread").classList.add("show");c.unread=0;renderChats($("#chatSearch").value)}
+function addBubble(who,text,append=true){const el=document.createElement("div");el.className="bubble"+(who==="me"?" me":"");el.textContent=text;const tm=document.createElement("time");tm.textContent=" "+(new Date().toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:true}));el.appendChild(tm);$("#bubbles").appendChild(el);if(append)$("#bubbles").scrollTop=$("#bubbles").scrollHeight}
+function showToast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
+function go(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");$("#thread").classList.remove("show");$("#homeIndicator").style.background=id==="home"?"#fff9":"#ffffff99";if(id==="home")$("#homeIndicator").style.background="#fff9"}
+document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.open)));
+document.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",()=>go("home")));
+$("#closeThread").onclick=()=>$("#thread").classList.remove("show");
+$("#composer").addEventListener("submit",e=>{e.preventDefault();const inp=$("#messageInput"),msg=inp.value.trim();if(!msg||!activeChat)return;addBubble("me",msg);activeChat.messages.push(["me",msg]);activeChat.preview=msg;inp.value="";setTimeout(()=>{let reply="ㅇㅋ";if(activeChat.name==="수호")reply="ㅇㅇ";else if(activeChat.name==="영이")reply="ㅋㅋ 알겠음";else if(activeChat.name==="범석")reply="암튼 내일 보자";else if(activeChat.name==="엄마")reply="응, 밥 잘 챙겨 먹어";addBubble("them",reply);activeChat.messages.push(["them",reply]);activeChat.preview=reply;renderChats($("#chatSearch").value)},700)});
+$("#chatSearch").addEventListener("input",e=>renderChats(e.target.value));
+$("#saveNote").onclick=()=>{const v=$("#noteInput").value.trim();if(!v){showToast("메모 내용을 입력해 줘");return}$("#savedNote").textContent=v;try{localStorage.setItem("suho-fan-note",v)}catch(e){}$("#noteInput").value="";showToast("메모를 저장했어")};
+try{const saved=localStorage.getItem("suho-fan-note");if(saved)$("#savedNote").textContent=saved}catch(e){}
+function setTrack(i){trackIndex=(i+tracks.length)%tracks.length;$("#trackName").textContent=tracks[trackIndex];$("#togglePlay").textContent=playing?"Ⅱ":"▶";$("#progress").style.width="35%"}
+document.querySelectorAll("[data-track]").forEach(b=>b.onclick=()=>{trackIndex=tracks.indexOf(b.dataset.track);playing=true;setTrack(trackIndex);showToast("재생 상태: "+tracks[trackIndex])});
+$("#togglePlay").onclick=()=>{playing=!playing;setTrack(trackIndex);showToast(playing?"재생 중":"일시 정지")};
+$("#prevTrack").onclick=()=>{setTrack(trackIndex-1);showToast(tracks[trackIndex])};$("#nextTrack").onclick=()=>{setTrack(trackIndex+1);showToast(tracks[trackIndex])};
+document.querySelectorAll("[data-photo]").forEach(p=>p.onclick=()=>showToast(p.dataset.photo+" · 사진 정보"));
+$("#shutter").onclick=()=>showToast("카메라 기능은 데모 모드야");
+function updateClock(){const d=new Date();$("#statusTime").textContent=d.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:false});$("#clock").textContent=d.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:false});$("#dateLine").textContent=d.toLocaleDateString("ko-KR",{month:"long",day:"numeric",weekday:"long"})}
+renderChats();updateClock();setInterval(updateClock,30000);
+</script>
+</body></html>
